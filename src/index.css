@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  --color-brand: #5b5bf0;
+  --color-brand-soft: #8a8af7;
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+}
+
+:root {
+  --canvas: #f6f6f8;
+  --surface: #ffffff;
+  --surface-2: #f0f0f4;
+  --line: #e4e4ea;
+  --fg: #16161d;
+  --fg-muted: #6b6b7b;
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: #0c0c11;
+  --surface: #15151c;
+  --surface-2: #1c1c25;
+  --line: #2a2a35;
+  --fg: #ededf3;
+  --fg-muted: #8b8b9c;
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    background: var(--canvas);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}

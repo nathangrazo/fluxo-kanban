@@ -15,6 +15,7 @@
   --color-line: var(--line);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
+  --color-chart: var(--chart);
 }
 
 :root {
@@ -24,6 +25,7 @@
   --line: #e4e4ea;
   --fg: #16161d;
   --fg-muted: #6b6b7b;
+  --chart: #5b5bf0;
   color-scheme: light;
 }
 
@@ -34,6 +36,7 @@
   --line: #2a2a35;
   --fg: #ededf3;
   --fg-muted: #8b8b9c;
+  --chart: #7b7bf5;
   color-scheme: dark;
 }
 

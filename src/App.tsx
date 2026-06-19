@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { CommandPalette } from "./components/CommandPalette";
 import { FilterBar } from "./components/FilterBar";
 import { Sidebar } from "./components/Sidebar";
 import { useHashRoute } from "./hooks/useHashRoute";
@@ -10,6 +11,19 @@ export default function App() {
   const route = useHashRoute();
   const searchRef = useRef<HTMLInputElement>(null);
   useThemeClass();
+
+  // "/" foca a busca
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const typing = e.target instanceof HTMLElement && e.target.closest("input, textarea, select");
+      if (e.key === "/" && !typing) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <div className="flex h-svh overflow-hidden">
@@ -25,6 +39,7 @@ export default function App() {
         {route === "board" && <BoardView />}
       </main>
       <TaskDrawer />
+      <CommandPalette />
     </div>
   );
 }

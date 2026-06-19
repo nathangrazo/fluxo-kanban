@@ -25,3 +25,7 @@ export function useHashRoute(): Route {
     () => "board",
   );
 }
+
+export function navigate(route: Route) {
+  window.location.hash = routeHref[route];
+}

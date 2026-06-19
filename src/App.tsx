@@ -3,6 +3,7 @@ import { FilterBar } from "./components/FilterBar";
 import { Sidebar } from "./components/Sidebar";
 import { useHashRoute } from "./hooks/useHashRoute";
 import { useThemeClass } from "./hooks/useTheme";
+import { TaskDrawer } from "./components/TaskDrawer";
 import { BoardView } from "./views/BoardView";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         </header>
         {route === "board" && <BoardView />}
       </main>
+      <TaskDrawer />
     </div>
   );
 }

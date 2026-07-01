@@ -17,7 +17,7 @@ export const FilterBar = forwardRef<HTMLInputElement>(function FilterBar(_, sear
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <label className="relative">
+      <label className="relative w-full sm:w-auto">
         <span className="sr-only">Buscar tarefas</span>
         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-fg-muted" />
         <input
@@ -25,7 +25,7 @@ export const FilterBar = forwardRef<HTMLInputElement>(function FilterBar(_, sear
           value={filters.query}
           onChange={(e) => setFilter("query", e.target.value)}
           placeholder="Buscar…"
-          className="w-56 rounded-lg border border-line bg-surface py-1.5 pr-10 pl-9 text-sm placeholder:text-fg-muted focus:border-brand focus:outline-none"
+          className="w-full rounded-lg border sm:w-56 border-line bg-surface py-1.5 pr-10 pl-9 text-sm placeholder:text-fg-muted focus:border-brand focus:outline-none"
         />
         <kbd className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded border border-line px-1.5 font-mono text-[0.65rem] text-fg-muted">
           /

@@ -73,7 +73,7 @@ export function OverviewView() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid flex-1 auto-rows-min grid-cols-2 gap-4 overflow-y-auto px-6 pb-8 lg:grid-cols-6 xl:grid-cols-12"
+      className="grid flex-1 auto-rows-min grid-cols-2 gap-4 overflow-y-auto px-4 pb-8 md:px-6 lg:grid-cols-6 xl:grid-cols-12"
     >
       {kpis.map((kpi) => (
         <motion.div key={kpi.label} variants={item} className="col-span-1 rounded-2xl border border-line bg-surface p-5 lg:col-span-3 xl:col-span-3">

@@ -29,7 +29,7 @@ export function Column({ id, title, accent, tasks, total, today }: Props) {
   }
 
   return (
-    <section className="flex w-72 shrink-0 flex-col" aria-label={title}>
+    <section className="flex w-72 shrink-0 flex-col xl:w-auto xl:min-w-64 xl:flex-1" aria-label={title}>
       <header className="mb-3 flex items-center gap-2 px-1">
         <span className="size-2 rounded-full" style={{ background: accent }} />
         <h2 className="text-sm font-semibold">{title}</h2>

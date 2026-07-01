@@ -6,6 +6,7 @@ import { useHashRoute } from "./hooks/useHashRoute";
 import { useThemeClass } from "./hooks/useTheme";
 import { TaskDrawer } from "./components/TaskDrawer";
 import { BoardView } from "./views/BoardView";
+import { OverviewView } from "./views/OverviewView";
 
 export default function App() {
   const route = useHashRoute();
@@ -36,7 +37,7 @@ export default function App() {
           </div>
           {route === "board" && <FilterBar ref={searchRef} />}
         </header>
-        {route === "board" && <BoardView />}
+        {route === "board" ? <BoardView /> : <OverviewView />}
       </main>
       <TaskDrawer />
       <CommandPalette />

@@ -11,6 +11,8 @@ export interface BoardState {
   addTask: (input: NewTask) => string;
   updateTask: (id: string, patch: Partial<Omit<Task, "id" | "status">>) => void;
   deleteTask: (id: string) => void;
+  /** Devolve uma tarefa excluída pra posição em que estava */
+  restoreTask: (task: Task, index: number) => void;
   moveTask: (id: string, to: Status, index?: number) => void;
   addChecklistItem: (taskId: string, text: string) => void;
   toggleChecklistItem: (taskId: string, itemId: string) => void;
@@ -60,6 +62,13 @@ export const useBoard = create<BoardState>()(
             tasks,
             order: { ...s.order, [task.status]: s.order[task.status].filter((t) => t !== id) },
           };
+        }),
+
+      restoreTask: (task, index) =>
+        set((s) => {
+          const column = s.order[task.status].filter((t) => t !== task.id);
+          column.splice(Math.min(index, column.length), 0, task.id);
+          return { tasks: { ...s.tasks, [task.id]: task }, order: { ...s.order, [task.status]: column } };
         }),
 
       moveTask: (id, to, index) => {

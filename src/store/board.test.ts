@@ -58,3 +58,22 @@ describe("board store", () => {
     expect(state().tasks[id].checklist).toHaveLength(0);
   });
 });
+
+describe("restoreTask", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useBoard.getState().reset();
+  });
+
+  it("devolve a tarefa excluída na mesma posição", () => {
+    const before = [...useBoard.getState().order.todo];
+    const id = before[1];
+    const task = useBoard.getState().tasks[id];
+
+    useBoard.getState().deleteTask(id);
+    useBoard.getState().restoreTask(task, 1);
+
+    expect(useBoard.getState().order.todo).toEqual(before);
+    expect(useBoard.getState().tasks[id]).toEqual(task);
+  });
+});

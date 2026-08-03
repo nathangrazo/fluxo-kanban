@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Priority } from "../types";
+import type { Priority, Task } from "../types";
+
+export type Burst = { id: number; x: number; y: number };
+export type Undo = { task: Task; index: number };
 
 export interface Filters {
   query: string;
@@ -19,7 +22,16 @@ interface UIState {
   clearFilters: () => void;
   select: (id: string | null) => void;
   setPalette: (open: boolean) => void;
+  /** Explosões de confete ativas */
+  bursts: Burst[];
+  celebrate: (x: number, y: number) => void;
+  clearBurst: (id: number) => void;
+  /** Última tarefa excluída, pra oferecer "Desfazer" */
+  undo: Undo | null;
+  setUndo: (undo: Undo | null) => void;
 }
+
+let burstId = 0;
 
 /** Estado de tela: não vai pro localStorage. */
 export const useUI = create<UIState>()((set) => ({
@@ -30,6 +42,11 @@ export const useUI = create<UIState>()((set) => ({
   clearFilters: () => set({ filters: emptyFilters }),
   select: (id) => set({ selectedId: id }),
   setPalette: (open) => set({ paletteOpen: open }),
+  bursts: [],
+  celebrate: (x, y) => set((s) => ({ bursts: [...s.bursts, { id: ++burstId, x, y }] })),
+  clearBurst: (id) => set((s) => ({ bursts: s.bursts.filter((b) => b.id !== id) })),
+  undo: null,
+  setUndo: (undo) => set({ undo }),
 }));
 
 type Theme = "light" | "dark";

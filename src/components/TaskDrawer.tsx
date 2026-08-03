@@ -11,6 +11,7 @@ const field = "w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm
 export function TaskDrawer() {
   const selectedId = useUI((s) => s.selectedId);
   const select = useUI((s) => s.select);
+  const setUndo = useUI((s) => s.setUndo);
   const task = useBoard((s) => (selectedId ? s.tasks[selectedId] : undefined));
   const { updateTask, moveTask, deleteTask, addChecklistItem, toggleChecklistItem, removeChecklistItem } = useBoard();
   const [newItem, setNewItem] = useState("");
@@ -54,10 +55,11 @@ export function TaskDrawer() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (confirm(`Excluir "${task.title}"?`)) {
-                      deleteTask(task.id);
-                      select(null);
-                    }
+                    // Sem confirm(): exclui na hora e oferece "Desfazer"
+                    const index = useBoard.getState().order[task.status].indexOf(task.id);
+                    setUndo({ task, index });
+                    deleteTask(task.id);
+                    select(null);
                   }}
                   aria-label="Excluir tarefa"
                   className="rounded-md p-1.5 text-fg-muted hover:bg-surface-2 hover:text-[#ef4f5f]"

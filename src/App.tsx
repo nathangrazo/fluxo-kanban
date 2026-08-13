@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CommandPalette } from "./components/CommandPalette";
+import { Confetti } from "./components/Confetti";
+import { UndoToast } from "./components/UndoToast";
 import { FilterBar } from "./components/FilterBar";
 import { Sidebar } from "./components/Sidebar";
 import { useHashRoute } from "./hooks/useHashRoute";
@@ -87,6 +89,8 @@ export default function App() {
       </main>
       <TaskDrawer />
       <CommandPalette />
+      <UndoToast />
+      <Confetti />
     </div>
   );
 }

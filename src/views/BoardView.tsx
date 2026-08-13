@@ -11,7 +11,7 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Column } from "../components/Column";
 import { TaskCard } from "../components/TaskCard";
 import { useToday } from "../hooks/useToday";
@@ -27,6 +27,8 @@ export function BoardView() {
   const filters = useUI((s) => s.filters);
   const today = useToday();
   const [activeId, setActiveId] = useState<string | null>(null);
+  const startStatus = useRef<Status | null>(null);
+  const celebrate = useUI((s) => s.celebrate);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -58,6 +60,7 @@ export function BoardView() {
 
   function handleDragStart({ active }: DragStartEvent) {
     setActiveId(String(active.id));
+    startStatus.current = tasks[String(active.id)]?.status ?? null;
   }
 
   // Troca de coluna enquanto arrasta, pra o card aparecer no lugar certo
@@ -71,10 +74,22 @@ export function BoardView() {
 
   function handleDragEnd({ active, over }: DragEndEvent) {
     setActiveId(null);
-    if (!over || active.id === over.id) return;
+    const startedIn = startStatus.current;
+    startStatus.current = null;
+    if (!over) return;
+
     const to = columnOf(String(over.id));
-    if (!to) return;
-    moveTask(String(active.id), to, indexIn(to, String(over.id)));
+    if (to && active.id !== over.id) {
+      moveTask(String(active.id), to, indexIn(to, String(over.id)));
+    }
+
+    // Confete quando a tarefa chega em "Concluído" vindo de outra coluna.
+    // O status já pode ter mudado no dragOver, por isso compara com o início.
+    const finalStatus = useBoard.getState().tasks[String(active.id)]?.status;
+    const rect = active.rect.current.translated;
+    if (finalStatus === "done" && startedIn !== "done" && rect) {
+      celebrate(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }
   }
 
   const activeTask = activeId ? tasks[activeId] : null;

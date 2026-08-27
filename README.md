@@ -14,6 +14,7 @@ Gerenciador de tarefas estilo kanban, feito pra estudar drag and drop, estado gl
 
 - Quadro com 4 colunas e **drag and drop** entre e dentro delas (mouse, toque e teclado)
 - Painel lateral pra editar título, status, prioridade, prazo, responsável, etiquetas, descrição e checklist
+- Confete quando uma tarefa é arrastada pra "Concluído" e "Desfazer" ao excluir
 - Filtros por texto, prioridade, etiqueta e pessoa
 - **Paleta de comandos** (`Ctrl/⌘ + K`) pra buscar tarefas e executar ações
 - Atalhos: `N` cria tarefa, `/` foca a busca, `Esc` fecha painéis
